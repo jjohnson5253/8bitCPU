@@ -1,0 +1,87 @@
+//Jake Johnson 2016
+
+module cpu(clock,inputs);
+	input clock;
+	input [3:0] inputs;
+	reg [2:0] Q; initial Q = 1;
+	//wire [3:0] bytes [7:0] = {12,35,-25,8,-8,0,0,0}; //8 byte registers (8-bits)
+	//wire [3:0] bytes [7:0] = {8'd12,8'd35,8'd-25,8'd8,8'd-8,8'd0,8'd0,8'd0}; //8 byte registers (8-bits)
+	//having trouble entering the values ^^
+	//wire [7:0] bytes [7:0] = '{8'b00000001,8'b00000001,8'b00000001,8'b00000001,
+	//8'b00000001,8'b00000001,8'b00000001,8'b00000001}; //8 byte registers (8-bits)
+	reg [7:0] bytes [7:0]; //8 byte registers (8-bits)
+	
+	initial bytes[0] = 1;
+	
+	always@(posedge clock)begin
+	
+	$display("bytes[0] = %b", bytes[0]);
+
+	/*
+	case(Q)
+	
+	end*/
+	
+	//getOpCode myOpCode(inputs,opCode);
+	//setBytes mySetBytes(bytes[0], )
+	end
+
+endmodule
+
+/*
+module getOpCode(inputs,opCode);
+	input inputs;
+	output reg [3:0] opCode;
+	
+	case(inputs)
+	4'b0000 :;
+	4'b0001 :;
+	4'b0010 :;
+	4'b0011 :;
+	4'b0100 :;
+	4'b0101 :;
+	4'b0110 :;
+	4'b0111 :;
+	4'b1000 :;
+	4'b1001 :;
+	4'b1010 :;
+	4'b1011 :;
+	4'b1100 :;
+	4'b1101 :;
+	4'b1110 :;
+	4'b1111 :;
+	
+	endcase
+
+
+endmodule*/
+
+module setBytes(register,byte);
+	input register;
+	output reg byte;
+/*
+	case(register)
+	4'b0000 : byte <= 12; //reg 1
+	4'b0001 : byte <= 35;
+	4'b0010 : byte <= -25;
+	4'b0011 : byte <= 8;
+	4'b0100 : byte <= -8;
+	4'b0101 :;
+	4'b0110 :;
+	4'b0111 :;
+
+
+	endcase*/
+
+endmodule
+
+
+
+
+
+
+
+
+
+
+
