@@ -1,11 +1,14 @@
 //Jake Johnson 2016
 
-module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton);
+module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED);
 	input clock,setButton; //clock and button to set values in each state
+	input displayButton; //press this button to toggle display variable
 	input [3:0] inputs; //inputs from switches
 	reg [2:0] Q; initial Q = 0; //state variable
+	input LED;
 
 	wire [7:0] bytes [7:0]; //8 byte registers (8-bits)
+	/*
 	assign bytes[0] = 1; //assigning each byte
 	assign bytes[1] = 1;
 	assign bytes[2] = 1;
@@ -13,13 +16,19 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton);
 	assign bytes[4] = 1;
 	assign bytes[5] = 1;
 	assign bytes[6] = 1;
-	assign bytes[7] = 1;
+	assign bytes[7] = 1;*/
 	
-	reg [3:0] opCode, registerID; //op code and register id (set by inputs in their respective states)
+	reg [3:0] opCode, regID1, regID2; //op code and register ids (set by inputs in their respective states)
 	wire [1:7] opCodeDisplay3,opCodeDisplay2,opCodeDisplay1,opCodeDisplay0; //values that hold operation display
 	//these values are set at each clock pulse, according to the opCode
 	//leds are set to this when in state 0
+	wire [1:7] reg1Display3,reg1Display2,reg1Display1,reg1Display0; //values for displaying first selected register ID
+	wire [1:7] reg2Display3,reg2Display2,reg2Display1,reg2Display0; //values for displaying second selected register ID
+	wire [1:7] display3,display2,display1,display0; //values for displaying reg value
 	output reg [1:7] leds3,leds2,leds1,leds0; //the leds mapped to the 7seg display (led3 is left-most 7seg digit)
+	
+	reg operate;  //set to 1 if operation should be performed
+	wire display; //set to true if user wants to display regID1 value
 	
 	
 	
@@ -30,12 +39,12 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton);
 		Q <= 1; 
 		end
 		1 : begin 
-		registerID <= inputs;
+		//registerID <= inputs;
 		Q <= 2; 
 		end
 		2 : begin
-		registerID <= inputs;
-		Q <= 3;
+		//registerID <= inputs;
+		Q <= 0;
 		end
 		
 		endcase
@@ -44,6 +53,13 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton);
 	
 	always@(posedge clock)begin
 	
+		if(!displayButton && (Q==1 || Q==2 || Q==3))begin //if button pressed, and in regID states or operation state
+			leds3 <= display3;
+			leds2 <= display2;
+			leds1 <= display1;
+			leds0 <= display0;
+		end
+		else begin
 		case(Q)
 		0 : begin //state 0: set operation
 		opCode <= inputs; //set op code to the inputs
@@ -52,10 +68,37 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton);
 		leds1 <= opCodeDisplay1;
 		leds0 <= opCodeDisplay0;
 		end
+		
+		1 : begin
+		regID1 <= inputs;
+		leds3 <= reg1Display3; //set leds to display regID
+		leds2 <= reg1Display2;
+		leds1 <= reg1Display1;
+		leds0 <= reg1Display0;
+		end
+		
+		2 : begin
+		regID2 <= inputs;
+		leds3 <= reg2Display3; //set leds to display operation
+		leds2 <= reg2Display2;
+		leds1 <= reg2Display1;
+		leds0 <= reg2Display0;
+		end
+		
+		3: operate <= 1;
 		endcase
+		end
 	end
 	
 	setOpCodeDisplay op1(clock,opCode,opCodeDisplay3,opCodeDisplay2,opCodeDisplay1,opCodeDisplay0);
+	setRegDisplay regDis1(clock,regID1,reg1Display3,reg1Display2,reg1Display1,reg1Display0);
+	setRegDisplay regDis2(clock,regID2,reg2Display3,reg2Display2,reg2Display1,reg2Display0);
+	setDisplay stage1(clock,Q,regID1,regID2,bytes[0],bytes[1],bytes[2],bytes[3],bytes[4],bytes[5],bytes[6],
+		bytes[7],display3,display2,display1,display0);
+
+	
+	operation operate1(clock,regID1,regID2,opCode,bytes[7],operate,
+		bytes[0],bytes[1],bytes[2],bytes[3],bytes[4],display,displayButton,LED);
 	
 endmodule
 
@@ -107,59 +150,245 @@ always@(posedge clock)
 	
 endmodule
 
-/*
-module getOpCode(inputs,opCode);
-	input inputs;
-	output reg [3:0] opCode;
+
+module setRegDisplay(clock, regID, display3,display2,display1,display0);
+input clock;
+input [3:0] regID;
+output reg [1:7] display3,display2,display1,display0;
+
+always@(posedge clock)begin
+
+	case(regID)
+			       //abcdefg
+	4'b0000 : begin //reg0
+	display3 <= 7'b1111010; //r
+	display2 <= 7'b0110000; //e
+	display1 <= 7'b0000100; //g
+	display0 <= 7'b0000001; //0
+	end
+	4'b0001 : begin //reg1
+	display3 <= 7'b1111010; //r
+	display2 <= 7'b0110000; //e
+	display1 <= 7'b0000100; //g
+	display0 <= 7'b1001111; //1
+	end
+	4'b0010 : begin //reg1
+	display3 <= 7'b1111010; //r
+	display2 <= 7'b0110000; //e
+	display1 <= 7'b0000100; //g
+	display0 <= 7'b0010010; //2
+	end
+	4'b0011 : display3 <= 7'b0000001;
+	4'b0100 : display3 <= 7'b0000001;
+	4'b0101 : display3 <= 7'b0000001;
+	4'b0110 : display3 <= 7'b0000001;
+	4'b0111 : display3 <= 7'b0000001;
+	4'b1000 : display3 <= 7'b0000001;
+	4'b1001 : display3 <= 7'b0000001;
+	4'b1010 : display3 <= 7'b0000001;
+	4'b1011 : display3 <= 7'b0000001;
+	4'b1100 : display3 <= 7'b0000001;
+	4'b1101 : display3 <= 7'b0000001;
+	4'b1110 : display3 <= 7'b0000001;
+	4'b1111 : display3 <= 7'b0000001;
+	endcase
 	
-	case(inputs)
-	4'b0000 :;
-	4'b0001 :;
-	4'b0010 :;
-	4'b0011 :;
-	4'b0100 :;
-	4'b0101 :;
-	4'b0110 :;
-	4'b0111 :;
-	4'b1000 :;
-	4'b1001 :;
-	4'b1010 :;
-	4'b1011 :;
-	4'b1100 :;
-	4'b1101 :;
-	4'b1110 :;
-	4'b1111 :;
+end
 	
+endmodule
+
+
+module operation(clock,regID1,regID2,opCode,reg7,operate,
+	reg0,reg1,reg2,reg3,reg4,display,displayButton,LED); //reg7 is the where result is stored
+input clock,operate,displayButton;
+input [3:0] regID1,regID2,opCode;
+input [7:0] reg0,reg1,reg2,reg3,reg4;
+
+reg [7:0] opReg1,opReg2; //registers to be operated on
+output reg [7:0] reg7;
+output reg display,LED; //set to true if user wants to display register
+initial display = 0;
+
+//toggle display option
+always@(!displayButton)begin
+	display <= ~display;
+	LED <= 1;
+end
+
+
+always@(posedge clock)begin
+
+	//set the operating registers according to the regID chosen by user in states 1,2
+	case(regID1)
+	4'b0000 : opReg1 <= reg0;
+	4'b0001 : opReg1 <= reg1;
+	4'b0010 : opReg1 <= reg2;
+	4'b0011 : opReg1 <= reg3;
+	4'b0100 : opReg1 <= reg4;
+	endcase
+	case(regID2)
+	4'b0000 : opReg2 <= reg0;
+	4'b0001 : opReg2 <= reg1;
+	4'b0010 : opReg2 <= reg2;
+	4'b0011 : opReg2 <= reg3;
+	4'b0100 : opReg2 <= reg4;
 	endcase
 
+	//perform operations between operating registers according to opCode set by user in state 0
+	if(operate)begin
+		case(opCode)
+		4'b0000 : begin //add
+			//reg7 <= opReg1 + opReg2;
+		end
+		4'b0001 : ; //subtract
+		4'b0010 : ; 
+		4'b0011 : ;
+		4'b0100 : ;
+		4'b0101 : ;
+		4'b0110 : ;
+		4'b0111 : ;
+		4'b1000 : ;
+		4'b1001 : ;
+		4'b1010 : ;
+		4'b1011 : ; //display
+		4'b1100 : ;
+		4'b1101 : ;
+		4'b1110 : ;
+		4'b1111 : ;
+		
+		endcase
 
-endmodule*/
+	end
+
+end
 
 
-module setBytes(bytes);
-	//input bytes;
-	output reg bytes;
-	
-	//initial bytes[0] = 1;
-/*
-	case(register)
-	4'b0000 : byte <= 12; //reg 1
-	4'b0001 : byte <= 35;
-	4'b0010 : byte <= -25;
-	4'b0011 : byte <= 8;
-	4'b0100 : byte <= -8;
-	4'b0101 :;
-	4'b0110 :;
-	4'b0111 :;
+endmodule
 
+module setDisplay(clock,Q,regID1,regID2,reg0,reg1,reg2,reg3,reg4,
+	reg5,reg6,reg7,display3,display2,display1,display0);
+	//display3,2,1,0 are the values to be displayed on 7seg display
 
-	endcase*/
+	input clock;
+	input [2:0] Q;
+	input [3:0] regID1,regID2;
+	input [7:0] reg0,reg1,reg2,reg3,reg4,reg5,reg6,reg7;
+	output reg [1:7] display3,display2,display1,display0;
+
+	reg [7:0] displayReg; //register to be displayed
+
+	always@(posedge clock)begin
+	 	//depending on state, change displayReg to regID being selected
+		//or display 1st chosen reg (if using display operation from op module)
+		case(Q)
+		0 : ;
+		1 : begin //regID1 selecting stage
+			case(regID1)
+			4'b0000 : displayReg <= reg0;
+			4'b0001 : displayReg <= reg1;
+			4'b0010 : displayReg <= reg2;
+			4'b0011 : displayReg <= reg3;
+			4'b0100 : displayReg <= reg4;
+			4'b0101 : displayReg <= reg5;
+			4'b0110 : displayReg <= reg6;
+			4'b0111 : displayReg <= reg7;
+			endcase
+		end
+		2 : begin //regID2 selecting stage
+			case(regID2)
+			4'b0000 : displayReg <= reg0;
+			4'b0001 : displayReg <= reg1;
+			4'b0010 : displayReg <= reg2;
+			4'b0011 : displayReg <= reg3;
+			4'b0100 : displayReg <= reg4;
+			4'b0101 : displayReg <= reg5;
+			4'b0110 : displayReg <= reg6;
+			4'b0111 : displayReg <= reg7;
+			endcase
+		end
+		3 : begin //operation stage
+			//displays first selected register
+			case(regID1)
+			4'b0000 : displayReg <= reg0;
+			4'b0001 : displayReg <= reg1;
+			4'b0010 : displayReg <= reg2;
+			4'b0011 : displayReg <= reg3;
+			4'b0100 : displayReg <= reg4;
+			4'b0101 : displayReg <= reg5;
+			4'b0110 : displayReg <= reg6;
+			4'b0111 : displayReg <= reg7;
+			endcase
+		end
+		endcase
+
+		//now set display values according to the reg that needs to
+		//be displayed
+		case(displayReg)
+			0 : begin
+				display3 <= 7'b1111111; //nothing
+				display2 <= 7'b1111111; //nothing
+				display1 <= 7'b1111111; //nothing
+				display0 <= 7'b0000001; //0
+			end
+			1 : begin
+				display3 <= 7'b1111111; //nothing
+				display2 <= 7'b1111111; //nothing
+				display1 <= 7'b1111111; //nothing
+				display0 <= 7'b1001111; //1
+			end
+			2 : begin
+				display3 <= 7'b1111111; //nothing
+				display2 <= 7'b1111111; //nothing
+				display1 <= 7'b1111111; //nothing
+				display0 <= 7'b0010010; //2
+			end
+			3 : begin
+				display3 <= 7'b1111111; //nothing
+				display2 <= 7'b1111111; //nothing
+				display1 <= 7'b1111111; //nothing
+				display0 <= 7'b0110000; //3
+			end
+			4 : begin
+				display3 <= 7'b1111111; //nothing
+				display2 <= 7'b1111111; //nothing
+				display1 <= 7'b1111111; //nothing
+				display0 <= 7'b1001100; //4
+			end
+			5 : begin
+				display3 <= 7'b1111111; //nothing
+				display2 <= 7'b1111111; //nothing
+				display1 <= 7'b1111111; //nothing
+				display0 <= 7'b0100100; //5
+			end
+		endcase
+
+	end
 
 endmodule
 
 
 
 
+
+
+/*
+4'b0000 : ;
+4'b0001 : ;
+4'b0010 : ;
+4'b0011 : ;
+4'b0100 : ;
+4'b0101 : ;
+4'b0110 : ;
+4'b0111 : ;
+4'b1000 : ;
+4'b1001 : ;
+4'b1010 : ;
+4'b1011 : ;
+4'b1100 : ;
+4'b1101 : ;
+4'b1110 : ;
+4'b1111 : ;
+*/
 
 
 

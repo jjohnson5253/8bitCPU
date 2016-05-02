@@ -1,5 +1,5 @@
 Analysis & Synthesis report for cpu
-Sun May 01 14:34:20 2016
+Sun May 01 23:09:30 2016
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -13,13 +13,12 @@ Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edit
   5. Analysis & Synthesis Source Files Read
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
-  8. State Machine - |cpu|Q
-  9. Registers Removed During Synthesis
- 10. Removed Registers Triggering Further Register Optimizations
- 11. General Register Statistics
- 12. Multiplexer Restructuring Statistics (Restructuring Performed)
- 13. Elapsed Time Per Partition
- 14. Analysis & Synthesis Messages
+  8. Registers Removed During Synthesis
+  9. General Register Statistics
+ 10. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 11. Port Connectivity Checks: "operation:operate1"
+ 12. Elapsed Time Per Partition
+ 13. Analysis & Synthesis Messages
 
 
 
@@ -45,16 +44,16 @@ applicable agreement for further details.
 +--------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                         ;
 +------------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Sun May 01 14:34:19 2016           ;
+; Analysis & Synthesis Status        ; Successful - Sun May 01 23:09:30 2016           ;
 ; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
 ; Revision Name                      ; cpu                                             ;
 ; Top-level Entity Name              ; cpu                                             ;
 ; Family                             ; Cyclone III                                     ;
-; Total logic elements               ; 20                                              ;
-;     Total combinational functions  ; 4                                               ;
-;     Dedicated logic registers      ; 20                                              ;
-; Total registers                    ; 20                                              ;
-; Total pins                         ; 34                                              ;
+; Total logic elements               ; 57                                              ;
+;     Total combinational functions  ; 43                                              ;
+;     Dedicated logic registers      ; 40                                              ;
+; Total registers                    ; 40                                              ;
+; Total pins                         ; 36                                              ;
 ; Total virtual pins                 ; 0                                               ;
 ; Total memory bits                  ; 0                                               ;
 ; Embedded Multiplier 9-bit elements ; 0                                               ;
@@ -174,135 +173,106 @@ Parallel compilation was disabled, but you have multiple processors available. E
 +---------------------------------------------+-------------+
 ; Resource                                    ; Usage       ;
 +---------------------------------------------+-------------+
-; Estimated Total logic elements              ; 20          ;
+; Estimated Total logic elements              ; 57          ;
 ;                                             ;             ;
-; Total combinational functions               ; 4           ;
+; Total combinational functions               ; 43          ;
 ; Logic element usage by number of LUT inputs ;             ;
-;     -- 4 input functions                    ; 0           ;
-;     -- 3 input functions                    ; 2           ;
-;     -- <=2 input functions                  ; 2           ;
+;     -- 4 input functions                    ; 23          ;
+;     -- 3 input functions                    ; 11          ;
+;     -- <=2 input functions                  ; 9           ;
 ;                                             ;             ;
 ; Logic elements by mode                      ;             ;
-;     -- normal mode                          ; 4           ;
+;     -- normal mode                          ; 43          ;
 ;     -- arithmetic mode                      ; 0           ;
 ;                                             ;             ;
-; Total registers                             ; 20          ;
-;     -- Dedicated logic registers            ; 20          ;
+; Total registers                             ; 40          ;
+;     -- Dedicated logic registers            ; 40          ;
 ;     -- I/O registers                        ; 0           ;
 ;                                             ;             ;
-; I/O pins                                    ; 34          ;
+; I/O pins                                    ; 36          ;
 ; Embedded Multiplier 9-bit elements          ; 0           ;
 ; Maximum fan-out node                        ; clock~input ;
-; Maximum fan-out                             ; 19          ;
-; Total fan-out                               ; 111         ;
-; Average fan-out                             ; 1.21        ;
+; Maximum fan-out                             ; 38          ;
+; Total fan-out                               ; 314         ;
+; Average fan-out                             ; 2.03        ;
 +---------------------------------------------+-------------+
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                               ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------------+--------------+
-; Compilation Hierarchy Node ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name       ; Library Name ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------------+--------------+
-; |cpu                       ; 4 (2)             ; 20 (18)      ; 0           ; 0            ; 0       ; 0         ; 34   ; 0            ; |cpu                      ; work         ;
-;    |setOpCodeDisplay:op1|  ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cpu|setOpCodeDisplay:op1 ; work         ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------------+--------------+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                ;
++----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------+--------------+
+; Compilation Hierarchy Node ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name        ; Library Name ;
++----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------+--------------+
+; |cpu                       ; 43 (31)           ; 40 (30)      ; 0           ; 0            ; 0       ; 0         ; 36   ; 0            ; |cpu                       ; work         ;
+;    |setOpCodeDisplay:op1|  ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cpu|setOpCodeDisplay:op1  ; work         ;
+;    |setRegDisplay:regDis1| ; 5 (5)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cpu|setRegDisplay:regDis1 ; work         ;
+;    |setRegDisplay:regDis2| ; 5 (5)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cpu|setRegDisplay:regDis2 ; work         ;
++----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
-Encoding Type:  One-Hot
-+---------------------------------------+
-; State Machine - |cpu|Q                ;
-+-------+-------+-------+-------+-------+
-; Name  ; Q.011 ; Q.010 ; Q.001 ; Q.000 ;
-+-------+-------+-------+-------+-------+
-; Q.000 ; 0     ; 0     ; 0     ; 0     ;
-; Q.001 ; 0     ; 0     ; 1     ; 1     ;
-; Q.010 ; 0     ; 1     ; 0     ; 1     ;
-; Q.011 ; 1     ; 0     ; 0     ; 1     ;
-+-------+-------+-------+-------+-------+
-
-
-+---------------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                                    ;
-+----------------------------------------+----------------------------------------------+
-; Register name                          ; Reason for Removal                           ;
-+----------------------------------------+----------------------------------------------+
-; setOpCodeDisplay:op1|display0[3..5,7]  ; Stuck at GND due to stuck port data_in       ;
-; setOpCodeDisplay:op1|display0[1]       ; Stuck at VCC due to stuck port data_in       ;
-; setOpCodeDisplay:op1|display1[6]       ; Stuck at VCC due to stuck port data_in       ;
-; setOpCodeDisplay:op1|display1[3..5]    ; Stuck at GND due to stuck port data_in       ;
-; setOpCodeDisplay:op1|display1[1]       ; Stuck at VCC due to stuck port data_in       ;
-; setOpCodeDisplay:op1|display2[1,3,6,7] ; Stuck at GND due to stuck port data_in       ;
-; setOpCodeDisplay:op1|display3[7]       ; Stuck at VCC due to stuck port data_in       ;
-; leds3[7]~reg0                          ; Stuck at VCC due to stuck port data_in       ;
-; leds2[1]~reg0                          ; Stuck at GND due to stuck port data_in       ;
-; leds2[3]~reg0                          ; Stuck at GND due to stuck port data_in       ;
-; leds2[6]~reg0                          ; Stuck at GND due to stuck port data_in       ;
-; leds2[7]~reg0                          ; Stuck at GND due to stuck port data_in       ;
-; leds1[1]~reg0                          ; Stuck at VCC due to stuck port data_in       ;
-; leds1[3]~reg0                          ; Stuck at GND due to stuck port data_in       ;
-; leds1[4]~reg0                          ; Stuck at GND due to stuck port data_in       ;
-; leds1[5]~reg0                          ; Stuck at GND due to stuck port data_in       ;
-; leds1[6]~reg0                          ; Stuck at VCC due to stuck port data_in       ;
-; leds0[1]~reg0                          ; Stuck at VCC due to stuck port data_in       ;
-; leds0[3]~reg0                          ; Stuck at GND due to stuck port data_in       ;
-; leds0[4]~reg0                          ; Stuck at GND due to stuck port data_in       ;
-; leds0[5]~reg0                          ; Stuck at GND due to stuck port data_in       ;
-; leds0[7]~reg0                          ; Stuck at GND due to stuck port data_in       ;
-; setOpCodeDisplay:op1|display3[1..5]    ; Merged with setOpCodeDisplay:op1|display3[6] ;
-; setOpCodeDisplay:op1|display2[4]       ; Merged with setOpCodeDisplay:op1|display0[6] ;
-; setOpCodeDisplay:op1|display1[2,7]     ; Merged with setOpCodeDisplay:op1|display0[2] ;
-; setOpCodeDisplay:op1|display2[2,5]     ; Merged with setOpCodeDisplay:op1|display0[2] ;
-; setOpCodeDisplay:op1|display0[6]       ; Merged with setOpCodeDisplay:op1|display0[2] ;
-; Q~2                                    ; Lost fanout                                  ;
-; Q~3                                    ; Lost fanout                                  ;
-; Q~4                                    ; Lost fanout                                  ;
-; Q.001                                  ; Lost fanout                                  ;
-; Q.010                                  ; Lost fanout                                  ;
-; Q.011                                  ; Lost fanout                                  ;
-; Total Number of Removed Registers = 47 ;                                              ;
-+----------------------------------------+----------------------------------------------+
-
-
-+-------------------------------------------------------------------------------------------------------+
-; Removed Registers Triggering Further Register Optimizations                                           ;
-+----------------------------------+---------------------------+----------------------------------------+
-; Register name                    ; Reason for Removal        ; Registers Removed due to This Register ;
-+----------------------------------+---------------------------+----------------------------------------+
-; Q~2                              ; Lost Fanouts              ; Q.010, Q.011                           ;
-; setOpCodeDisplay:op1|display0[3] ; Stuck at GND              ; leds0[3]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; setOpCodeDisplay:op1|display0[4] ; Stuck at GND              ; leds0[4]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; setOpCodeDisplay:op1|display0[5] ; Stuck at GND              ; leds0[5]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; setOpCodeDisplay:op1|display0[7] ; Stuck at GND              ; leds0[7]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; setOpCodeDisplay:op1|display0[1] ; Stuck at VCC              ; leds0[1]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; setOpCodeDisplay:op1|display1[6] ; Stuck at VCC              ; leds1[6]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; setOpCodeDisplay:op1|display1[5] ; Stuck at GND              ; leds1[5]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; setOpCodeDisplay:op1|display1[4] ; Stuck at GND              ; leds1[4]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; setOpCodeDisplay:op1|display1[3] ; Stuck at GND              ; leds1[3]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; setOpCodeDisplay:op1|display1[1] ; Stuck at VCC              ; leds1[1]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; setOpCodeDisplay:op1|display2[7] ; Stuck at GND              ; leds2[7]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; setOpCodeDisplay:op1|display2[6] ; Stuck at GND              ; leds2[6]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; setOpCodeDisplay:op1|display2[3] ; Stuck at GND              ; leds2[3]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; setOpCodeDisplay:op1|display2[1] ; Stuck at GND              ; leds2[1]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; setOpCodeDisplay:op1|display3[7] ; Stuck at VCC              ; leds3[7]~reg0                          ;
-;                                  ; due to stuck port data_in ;                                        ;
-; Q~3                              ; Lost Fanouts              ; Q.001                                  ;
-+----------------------------------+---------------------------+----------------------------------------+
++-----------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                      ;
++-----------------------------------------+-----------------------------------------------+
+; Register name                           ; Reason for Removal                            ;
++-----------------------------------------+-----------------------------------------------+
+; setDisplay:stage1|display1[1..7]        ; Stuck at VCC due to stuck port data_in        ;
+; setDisplay:stage1|display2[1..7]        ; Stuck at VCC due to stuck port data_in        ;
+; setDisplay:stage1|display3[1..7]        ; Stuck at VCC due to stuck port data_in        ;
+; setRegDisplay:regDis2|display0[2]       ; Stuck at GND due to stuck port data_in        ;
+; setRegDisplay:regDis2|display1[6,7]     ; Stuck at GND due to stuck port data_in        ;
+; setRegDisplay:regDis2|display1[5]       ; Stuck at VCC due to stuck port data_in        ;
+; setRegDisplay:regDis2|display1[1..4]    ; Stuck at GND due to stuck port data_in        ;
+; setRegDisplay:regDis2|display2[4..7]    ; Stuck at GND due to stuck port data_in        ;
+; setRegDisplay:regDis2|display2[2,3]     ; Stuck at VCC due to stuck port data_in        ;
+; setRegDisplay:regDis2|display2[1]       ; Stuck at GND due to stuck port data_in        ;
+; setRegDisplay:regDis2|display3[5]       ; Stuck at GND due to stuck port data_in        ;
+; setRegDisplay:regDis1|display0[2]       ; Stuck at GND due to stuck port data_in        ;
+; setRegDisplay:regDis1|display1[6,7]     ; Stuck at GND due to stuck port data_in        ;
+; setRegDisplay:regDis1|display1[5]       ; Stuck at VCC due to stuck port data_in        ;
+; setRegDisplay:regDis1|display1[1..4]    ; Stuck at GND due to stuck port data_in        ;
+; setRegDisplay:regDis1|display2[4..7]    ; Stuck at GND due to stuck port data_in        ;
+; setRegDisplay:regDis1|display2[2,3]     ; Stuck at VCC due to stuck port data_in        ;
+; setRegDisplay:regDis1|display2[1]       ; Stuck at GND due to stuck port data_in        ;
+; setRegDisplay:regDis1|display3[5]       ; Stuck at GND due to stuck port data_in        ;
+; setOpCodeDisplay:op1|display0[3..5,7]   ; Stuck at GND due to stuck port data_in        ;
+; setOpCodeDisplay:op1|display0[1]        ; Stuck at VCC due to stuck port data_in        ;
+; setOpCodeDisplay:op1|display1[6]        ; Stuck at VCC due to stuck port data_in        ;
+; setOpCodeDisplay:op1|display1[3..5]     ; Stuck at GND due to stuck port data_in        ;
+; setOpCodeDisplay:op1|display1[1]        ; Stuck at VCC due to stuck port data_in        ;
+; setOpCodeDisplay:op1|display2[1,3,6,7]  ; Stuck at GND due to stuck port data_in        ;
+; setOpCodeDisplay:op1|display3[7]        ; Stuck at VCC due to stuck port data_in        ;
+; Q[2]                                    ; Stuck at GND due to stuck port data_in        ;
+; setRegDisplay:regDis2|display3[1..4,6]  ; Merged with setRegDisplay:regDis2|display3[7] ;
+; setRegDisplay:regDis1|display3[1..4,6]  ; Merged with setRegDisplay:regDis1|display3[7] ;
+; setOpCodeDisplay:op1|display3[1..5]     ; Merged with setOpCodeDisplay:op1|display3[6]  ;
+; leds1[7]~reg0                           ; Merged with leds1[2]~reg0                     ;
+; leds2[5]~reg0                           ; Merged with leds1[2]~reg0                     ;
+; leds1[6]~reg0                           ; Merged with leds1[1]~reg0                     ;
+; leds2[3]~reg0                           ; Merged with leds1[5]~reg0                     ;
+; leds1[4]~reg0                           ; Merged with leds1[3]~reg0                     ;
+; leds2[1]~reg0                           ; Merged with leds1[3]~reg0                     ;
+; leds2[6]~reg0                           ; Merged with leds1[3]~reg0                     ;
+; leds2[7]~reg0                           ; Merged with leds1[3]~reg0                     ;
+; leds3[2]~reg0                           ; Merged with leds3[1]~reg0                     ;
+; leds3[3]~reg0                           ; Merged with leds3[1]~reg0                     ;
+; leds3[4]~reg0                           ; Merged with leds3[1]~reg0                     ;
+; leds3[6]~reg0                           ; Merged with leds3[1]~reg0                     ;
+; setDisplay:stage1|display0[4]           ; Merged with setDisplay:stage1|display0[1]     ;
+; setDisplay:stage1|displayReg[1..7]      ; Merged with setDisplay:stage1|displayReg[0]   ;
+; setRegDisplay:regDis2|display0[4,5]     ; Merged with setRegDisplay:regDis2|display0[1] ;
+; setRegDisplay:regDis1|display0[4,5]     ; Merged with setRegDisplay:regDis1|display0[1] ;
+; setOpCodeDisplay:op1|display2[4]        ; Merged with setOpCodeDisplay:op1|display0[6]  ;
+; setOpCodeDisplay:op1|display1[2,7]      ; Merged with setOpCodeDisplay:op1|display0[2]  ;
+; setOpCodeDisplay:op1|display2[2,5]      ; Merged with setOpCodeDisplay:op1|display0[2]  ;
+; setDisplay:stage1|display0[3,5,6]       ; Stuck at GND due to stuck port data_in        ;
+; setDisplay:stage1|display0[7]           ; Stuck at VCC due to stuck port data_in        ;
+; setDisplay:stage1|display0[1,2]         ; Stuck at GND due to stuck port data_in        ;
+; setOpCodeDisplay:op1|display0[6]        ; Merged with setOpCodeDisplay:op1|display0[2]  ;
+; setRegDisplay:regDis1|display0[3]       ; Merged with setRegDisplay:regDis1|display0[7] ;
+; setRegDisplay:regDis2|display0[3]       ; Merged with setRegDisplay:regDis2|display0[7] ;
+; Total Number of Removed Registers = 122 ;                                               ;
++-----------------------------------------+-----------------------------------------------+
 
 
 +------------------------------------------------------+
@@ -310,23 +280,39 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 20    ;
-; Number of registers using Synchronous Clear  ; 0     ;
+; Total registers                              ; 40    ;
+; Number of registers using Synchronous Clear  ; 1     ;
 ; Number of registers using Synchronous Load   ; 0     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 17    ;
+; Number of registers using Clock Enable       ; 29    ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                      ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output            ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------+
-; 16:1               ; 2 bits    ; 20 LEs        ; 2 LEs                ; 18 LEs                 ; Yes        ; |cpu|setOpCodeDisplay:op1|display0[2] ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------+
++------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                       ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output             ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------+
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |cpu|leds1[5]~reg0                     ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |cpu|leds3[7]~reg0                     ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |cpu|leds3[5]~reg0                     ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |cpu|leds0[5]~reg0                     ;
+; 16:1               ; 4 bits    ; 40 LEs        ; 8 LEs                ; 32 LEs                 ; Yes        ; |cpu|setRegDisplay:regDis1|display0[7] ;
+; 16:1               ; 4 bits    ; 40 LEs        ; 8 LEs                ; 32 LEs                 ; Yes        ; |cpu|setRegDisplay:regDis2|display0[7] ;
+; 16:1               ; 2 bits    ; 20 LEs        ; 2 LEs                ; 18 LEs                 ; Yes        ; |cpu|setOpCodeDisplay:op1|display0[2]  ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "operation:operate1"                                                                    ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+; Port    ; Type   ; Severity ; Details                                                                             ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+; display ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; LED     ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
 
 
 +-------------------------------+
@@ -334,7 +320,7 @@ Encoding Type:  One-Hot
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:02     ;
+; Top            ; 00:00:03     ;
 +----------------+--------------+
 
 
@@ -344,47 +330,203 @@ Encoding Type:  One-Hot
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit Analysis & Synthesis
     Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-    Info: Processing started: Sun May 01 14:34:13 2016
+    Info: Processing started: Sun May 01 23:09:23 2016
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cpu -c cpu
 Warning (20028): Parallel compilation is not licensed and has been disabled
-Warning (10261): Verilog HDL Event Control warning at cpu.v(26): Event Control contains a complex event expression
-Warning (12125): Using design file cpu.v, which is not specified as a design file for the current project, but contains definitions for 3 design units and 3 entities in project
+Warning (10261): Verilog HDL Event Control warning at cpu.v(35): Event Control contains a complex event expression
+Warning (10261): Verilog HDL Event Control warning at cpu.v(213): Event Control contains a complex event expression
+Warning (12125): Using design file cpu.v, which is not specified as a design file for the current project, but contains definitions for 5 design units and 5 entities in project
     Info (12023): Found entity 1: cpu
     Info (12023): Found entity 2: setOpCodeDisplay
-    Info (12023): Found entity 3: setBytes
+    Info (12023): Found entity 3: setRegDisplay
+    Info (12023): Found entity 4: operation
+    Info (12023): Found entity 5: setDisplay
 Info (12127): Elaborating entity "cpu" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at cpu.v(8): object "bytes" assigned a value but never read
-Warning (10036): Verilog HDL or VHDL warning at cpu.v(18): object "registerID" assigned a value but never read
-Info (10264): Verilog HDL Case Statement information at cpu.v(27): all case item expressions in this case statement are onehot
 Info (12128): Elaborating entity "setOpCodeDisplay" for hierarchy "setOpCodeDisplay:op1"
-Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "leds3[7]" is stuck at VCC
-    Warning (13410): Pin "leds2[7]" is stuck at GND
-    Warning (13410): Pin "leds2[6]" is stuck at GND
-    Warning (13410): Pin "leds2[3]" is stuck at GND
-    Warning (13410): Pin "leds2[1]" is stuck at GND
-    Warning (13410): Pin "leds1[6]" is stuck at VCC
-    Warning (13410): Pin "leds1[5]" is stuck at GND
-    Warning (13410): Pin "leds1[4]" is stuck at GND
-    Warning (13410): Pin "leds1[3]" is stuck at GND
-    Warning (13410): Pin "leds1[1]" is stuck at VCC
-    Warning (13410): Pin "leds0[7]" is stuck at GND
-    Warning (13410): Pin "leds0[5]" is stuck at GND
-    Warning (13410): Pin "leds0[4]" is stuck at GND
-    Warning (13410): Pin "leds0[3]" is stuck at GND
-    Warning (13410): Pin "leds0[1]" is stuck at VCC
+Info (12128): Elaborating entity "setRegDisplay" for hierarchy "setRegDisplay:regDis1"
+Info (12128): Elaborating entity "setDisplay" for hierarchy "setDisplay:stage1"
+Info (12128): Elaborating entity "operation" for hierarchy "operation:operate1"
+Warning (10036): Verilog HDL or VHDL warning at cpu.v(207): object "opReg1" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at cpu.v(207): object "opReg2" assigned a value but never read
+Warning (10755): Verilog HDL warning at cpu.v(213): assignments to display create a combinational loop
+Warning (10034): Output port "reg7" at cpu.v(208) has no driver
+Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][0]" is missing source, defaulting to GND
+Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][0]" is missing source, defaulting to GND
+Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][0]" is missing source, defaulting to GND
+Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[4][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[3][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[2][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[1][0]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[0][0]" is missing source, defaulting to GND
 Info (286030): Timing-Driven Synthesis is running
-Info (17049): 6 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 55 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 6 input pins
+Warning (21074): Design contains 1 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "LED"
+Info (21057): Implemented 95 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 8 input pins
     Info (21059): Implemented 28 output pins
-    Info (21061): Implemented 21 logic cells
-Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 21 warnings
+    Info (21061): Implemented 59 logic cells
+Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 174 warnings
     Info: Peak virtual memory: 472 megabytes
-    Info: Processing ended: Sun May 01 14:34:20 2016
+    Info: Processing ended: Sun May 01 23:09:30 2016
     Info: Elapsed time: 00:00:07
-    Info: Total CPU time (on all processors): 00:00:06
+    Info: Total CPU time (on all processors): 00:00:07
 
 
