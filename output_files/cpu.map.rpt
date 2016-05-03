@@ -1,5 +1,5 @@
 Analysis & Synthesis report for cpu
-Sun May 01 23:09:30 2016
+Tue May 03 00:29:59 2016
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -14,11 +14,13 @@ Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edit
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
   8. Registers Removed During Synthesis
-  9. General Register Statistics
- 10. Multiplexer Restructuring Statistics (Restructuring Performed)
- 11. Port Connectivity Checks: "operation:operate1"
- 12. Elapsed Time Per Partition
- 13. Analysis & Synthesis Messages
+  9. Removed Registers Triggering Further Register Optimizations
+ 10. General Register Statistics
+ 11. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 12. Port Connectivity Checks: "updateRegisters:update1"
+ 13. Port Connectivity Checks: "operation:operate1"
+ 14. Elapsed Time Per Partition
+ 15. Analysis & Synthesis Messages
 
 
 
@@ -44,15 +46,15 @@ applicable agreement for further details.
 +--------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                         ;
 +------------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Sun May 01 23:09:30 2016           ;
+; Analysis & Synthesis Status        ; Successful - Tue May 03 00:29:58 2016           ;
 ; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
 ; Revision Name                      ; cpu                                             ;
 ; Top-level Entity Name              ; cpu                                             ;
 ; Family                             ; Cyclone III                                     ;
-; Total logic elements               ; 57                                              ;
-;     Total combinational functions  ; 43                                              ;
-;     Dedicated logic registers      ; 40                                              ;
-; Total registers                    ; 40                                              ;
+; Total logic elements               ; 68                                              ;
+;     Total combinational functions  ; 53                                              ;
+;     Dedicated logic registers      ; 46                                              ;
+; Total registers                    ; 46                                              ;
 ; Total pins                         ; 36                                              ;
 ; Total virtual pins                 ; 0                                               ;
 ; Total memory bits                  ; 0                                               ;
@@ -173,41 +175,44 @@ Parallel compilation was disabled, but you have multiple processors available. E
 +---------------------------------------------+-------------+
 ; Resource                                    ; Usage       ;
 +---------------------------------------------+-------------+
-; Estimated Total logic elements              ; 57          ;
+; Estimated Total logic elements              ; 68          ;
 ;                                             ;             ;
-; Total combinational functions               ; 43          ;
+; Total combinational functions               ; 53          ;
 ; Logic element usage by number of LUT inputs ;             ;
-;     -- 4 input functions                    ; 23          ;
-;     -- 3 input functions                    ; 11          ;
-;     -- <=2 input functions                  ; 9           ;
+;     -- 4 input functions                    ; 28          ;
+;     -- 3 input functions                    ; 13          ;
+;     -- <=2 input functions                  ; 12          ;
 ;                                             ;             ;
 ; Logic elements by mode                      ;             ;
-;     -- normal mode                          ; 43          ;
+;     -- normal mode                          ; 53          ;
 ;     -- arithmetic mode                      ; 0           ;
 ;                                             ;             ;
-; Total registers                             ; 40          ;
-;     -- Dedicated logic registers            ; 40          ;
+; Total registers                             ; 46          ;
+;     -- Dedicated logic registers            ; 46          ;
 ;     -- I/O registers                        ; 0           ;
 ;                                             ;             ;
 ; I/O pins                                    ; 36          ;
 ; Embedded Multiplier 9-bit elements          ; 0           ;
 ; Maximum fan-out node                        ; clock~input ;
-; Maximum fan-out                             ; 38          ;
-; Total fan-out                               ; 314         ;
-; Average fan-out                             ; 2.03        ;
+; Maximum fan-out                             ; 44          ;
+; Total fan-out                               ; 357         ;
+; Average fan-out                             ; 2.09        ;
 +---------------------------------------------+-------------+
 
 
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------+--------------+
-; Compilation Hierarchy Node ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name        ; Library Name ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------+--------------+
-; |cpu                       ; 43 (31)           ; 40 (30)      ; 0           ; 0            ; 0       ; 0         ; 36   ; 0            ; |cpu                       ; work         ;
-;    |setOpCodeDisplay:op1|  ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cpu|setOpCodeDisplay:op1  ; work         ;
-;    |setRegDisplay:regDis1| ; 5 (5)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cpu|setRegDisplay:regDis1 ; work         ;
-;    |setRegDisplay:regDis2| ; 5 (5)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cpu|setRegDisplay:regDis2 ; work         ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------+--------------+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                    ;
++------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------+--------------+
+; Compilation Hierarchy Node   ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name          ; Library Name ;
++------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------+--------------+
+; |cpu                         ; 53 (34)           ; 46 (31)      ; 0           ; 0            ; 0       ; 0         ; 36   ; 0            ; |cpu                         ; work         ;
+;    |operation:operate1|      ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cpu|operation:operate1      ; work         ;
+;    |setDisplay:stage1|       ; 4 (4)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cpu|setDisplay:stage1       ; work         ;
+;    |setOpCodeDisplay:op1|    ; 2 (2)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cpu|setOpCodeDisplay:op1    ; work         ;
+;    |setRegDisplay:regDis1|   ; 5 (5)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cpu|setRegDisplay:regDis1   ; work         ;
+;    |setRegDisplay:regDis2|   ; 5 (5)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cpu|setRegDisplay:regDis2   ; work         ;
+;    |updateRegisters:update1| ; 1 (1)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cpu|updateRegisters:update1 ; work         ;
++------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
@@ -242,7 +247,6 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; setOpCodeDisplay:op1|display1[1]        ; Stuck at VCC due to stuck port data_in        ;
 ; setOpCodeDisplay:op1|display2[1,3,6,7]  ; Stuck at GND due to stuck port data_in        ;
 ; setOpCodeDisplay:op1|display3[7]        ; Stuck at VCC due to stuck port data_in        ;
-; Q[2]                                    ; Stuck at GND due to stuck port data_in        ;
 ; setRegDisplay:regDis2|display3[1..4,6]  ; Merged with setRegDisplay:regDis2|display3[7] ;
 ; setRegDisplay:regDis1|display3[1..4,6]  ; Merged with setRegDisplay:regDis1|display3[7] ;
 ; setOpCodeDisplay:op1|display3[1..5]     ; Merged with setOpCodeDisplay:op1|display3[6]  ;
@@ -258,21 +262,50 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; leds3[3]~reg0                           ; Merged with leds3[1]~reg0                     ;
 ; leds3[4]~reg0                           ; Merged with leds3[1]~reg0                     ;
 ; leds3[6]~reg0                           ; Merged with leds3[1]~reg0                     ;
+; updateRegisters:update1|bytes3          ; Merged with updateRegisters:update1|bytes2    ;
+; updateRegisters:update1|bytes4          ; Merged with updateRegisters:update1|bytes2    ;
+; updateRegisters:update1|bytes5          ; Merged with updateRegisters:update1|bytes2    ;
+; updateRegisters:update1|bytes6          ; Merged with updateRegisters:update1|bytes2    ;
+; updateRegisters:update1|bytes7          ; Merged with updateRegisters:update1|bytes2    ;
+; updateRegisters:update1|bytes1          ; Merged with updateRegisters:update1|bytes0    ;
+; operation:operate1|resultRegs3[0]       ; Merged with operation:operate1|resultRegs2[0] ;
+; operation:operate1|resultRegs4[0]       ; Merged with operation:operate1|resultRegs2[0] ;
+; operation:operate1|resultRegs5[0]       ; Merged with operation:operate1|resultRegs2[0] ;
+; operation:operate1|resultRegs6[0]       ; Merged with operation:operate1|resultRegs2[0] ;
+; operation:operate1|resultRegs7[0]       ; Merged with operation:operate1|resultRegs2[0] ;
+; operation:operate1|resultRegs1[0]       ; Merged with operation:operate1|resultRegs0[0] ;
 ; setDisplay:stage1|display0[4]           ; Merged with setDisplay:stage1|display0[1]     ;
-; setDisplay:stage1|displayReg[1..7]      ; Merged with setDisplay:stage1|displayReg[0]   ;
+; setDisplay:stage1|displayReg[2..7]      ; Merged with setDisplay:stage1|displayReg[1]   ;
 ; setRegDisplay:regDis2|display0[4,5]     ; Merged with setRegDisplay:regDis2|display0[1] ;
 ; setRegDisplay:regDis1|display0[4,5]     ; Merged with setRegDisplay:regDis1|display0[1] ;
 ; setOpCodeDisplay:op1|display2[4]        ; Merged with setOpCodeDisplay:op1|display0[6]  ;
 ; setOpCodeDisplay:op1|display1[2,7]      ; Merged with setOpCodeDisplay:op1|display0[2]  ;
 ; setOpCodeDisplay:op1|display2[2,5]      ; Merged with setOpCodeDisplay:op1|display0[2]  ;
-; setDisplay:stage1|display0[3,5,6]       ; Stuck at GND due to stuck port data_in        ;
+; Q[2]                                    ; Stuck at GND due to stuck port data_in        ;
+; operation:operate1|resultRegs2[0]       ; Stuck at GND due to stuck port data_in        ;
+; updateRegisters:update1|bytes2          ; Stuck at GND due to stuck port data_in        ;
+; setDisplay:stage1|display0[3]           ; Stuck at GND due to stuck port data_in        ;
 ; setDisplay:stage1|display0[7]           ; Stuck at VCC due to stuck port data_in        ;
-; setDisplay:stage1|display0[1,2]         ; Stuck at GND due to stuck port data_in        ;
+; setDisplay:stage1|display0[2]           ; Stuck at GND due to stuck port data_in        ;
+; setDisplay:stage1|display0[1,6]         ; Merged with setDisplay:stage1|display0[5]     ;
+; setDisplay:stage1|displayReg[1]         ; Stuck at GND due to stuck port data_in        ;
 ; setOpCodeDisplay:op1|display0[6]        ; Merged with setOpCodeDisplay:op1|display0[2]  ;
 ; setRegDisplay:regDis1|display0[3]       ; Merged with setRegDisplay:regDis1|display0[7] ;
 ; setRegDisplay:regDis2|display0[3]       ; Merged with setRegDisplay:regDis2|display0[7] ;
-; Total Number of Removed Registers = 122 ;                                               ;
+; Total Number of Removed Registers = 135 ;                                               ;
 +-----------------------------------------+-----------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                                            ;
++-----------------------------------+---------------------------+----------------------------------------+
+; Register name                     ; Reason for Removal        ; Registers Removed due to This Register ;
++-----------------------------------+---------------------------+----------------------------------------+
+; Q[2]                              ; Stuck at GND              ; setDisplay:stage1|displayReg[1]        ;
+;                                   ; due to stuck port data_in ;                                        ;
+; operation:operate1|resultRegs2[0] ; Stuck at GND              ; updateRegisters:update1|bytes2         ;
+;                                   ; due to stuck port data_in ;                                        ;
++-----------------------------------+---------------------------+----------------------------------------+
 
 
 +------------------------------------------------------+
@@ -280,7 +313,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 40    ;
+; Total registers                              ; 46    ;
 ; Number of registers using Synchronous Clear  ; 1     ;
 ; Number of registers using Synchronous Load   ; 0     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
@@ -301,18 +334,50 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |cpu|leds0[5]~reg0                     ;
 ; 16:1               ; 4 bits    ; 40 LEs        ; 8 LEs                ; 32 LEs                 ; Yes        ; |cpu|setRegDisplay:regDis1|display0[7] ;
 ; 16:1               ; 4 bits    ; 40 LEs        ; 8 LEs                ; 32 LEs                 ; Yes        ; |cpu|setRegDisplay:regDis2|display0[7] ;
-; 16:1               ; 2 bits    ; 20 LEs        ; 2 LEs                ; 18 LEs                 ; Yes        ; |cpu|setOpCodeDisplay:op1|display0[2]  ;
+; 16:1               ; 2 bits    ; 20 LEs        ; 2 LEs                ; 18 LEs                 ; Yes        ; |cpu|setOpCodeDisplay:op1|display0[6]  ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------+
 
 
-+-------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "operation:operate1"                                                                    ;
-+---------+--------+----------+-------------------------------------------------------------------------------------+
-; Port    ; Type   ; Severity ; Details                                                                             ;
-+---------+--------+----------+-------------------------------------------------------------------------------------+
-; display ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-; LED     ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-+---------+--------+----------+-------------------------------------------------------------------------------------+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "updateRegisters:update1"                                                                                                                                                                ;
++-------------+--------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port        ; Type   ; Severity ; Details                                                                                                                                                                          ;
++-------------+--------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; resultRegs0 ; Input  ; Warning  ; Input port expression (8 bits) is wider than the input port (1 bits) it drives.  The 7 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; resultRegs1 ; Input  ; Warning  ; Input port expression (8 bits) is wider than the input port (1 bits) it drives.  The 7 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; resultRegs2 ; Input  ; Warning  ; Input port expression (8 bits) is wider than the input port (1 bits) it drives.  The 7 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; resultRegs3 ; Input  ; Warning  ; Input port expression (8 bits) is wider than the input port (1 bits) it drives.  The 7 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; resultRegs4 ; Input  ; Warning  ; Input port expression (8 bits) is wider than the input port (1 bits) it drives.  The 7 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; resultRegs5 ; Input  ; Warning  ; Input port expression (8 bits) is wider than the input port (1 bits) it drives.  The 7 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; resultRegs6 ; Input  ; Warning  ; Input port expression (8 bits) is wider than the input port (1 bits) it drives.  The 7 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; resultRegs7 ; Input  ; Warning  ; Input port expression (8 bits) is wider than the input port (1 bits) it drives.  The 7 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; bytes0      ; Output ; Warning  ; Output or bidir port (1 bits) is smaller than the port expression (8 bits) it drives.  The 7 most-significant bit(s) in the port expression will be connected to GND.            ;
+; bytes1      ; Output ; Warning  ; Output or bidir port (1 bits) is smaller than the port expression (8 bits) it drives.  The 7 most-significant bit(s) in the port expression will be connected to GND.            ;
+; bytes2      ; Output ; Warning  ; Output or bidir port (1 bits) is smaller than the port expression (8 bits) it drives.  The 7 most-significant bit(s) in the port expression will be connected to GND.            ;
+; bytes3      ; Output ; Warning  ; Output or bidir port (1 bits) is smaller than the port expression (8 bits) it drives.  The 7 most-significant bit(s) in the port expression will be connected to GND.            ;
+; bytes4      ; Output ; Warning  ; Output or bidir port (1 bits) is smaller than the port expression (8 bits) it drives.  The 7 most-significant bit(s) in the port expression will be connected to GND.            ;
+; bytes5      ; Output ; Warning  ; Output or bidir port (1 bits) is smaller than the port expression (8 bits) it drives.  The 7 most-significant bit(s) in the port expression will be connected to GND.            ;
+; bytes6      ; Output ; Warning  ; Output or bidir port (1 bits) is smaller than the port expression (8 bits) it drives.  The 7 most-significant bit(s) in the port expression will be connected to GND.            ;
+; bytes7      ; Output ; Warning  ; Output or bidir port (1 bits) is smaller than the port expression (8 bits) it drives.  The 7 most-significant bit(s) in the port expression will be connected to GND.            ;
++-------------+--------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "operation:operate1"                                                                              ;
++-------------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port              ; Type   ; Severity ; Details                                                                             ;
++-------------------+--------+----------+-------------------------------------------------------------------------------------+
+; resultRegs0[7..1] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; resultRegs1[7..1] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; resultRegs2[7..1] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; resultRegs3[7..1] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; resultRegs4[7..1] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; resultRegs5[7..1] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; resultRegs6[7..1] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; resultRegs7[7..1] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; display           ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; LED               ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++-------------------+--------+----------+-------------------------------------------------------------------------------------+
 
 
 +-------------------------------+
@@ -320,7 +385,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:03     ;
+; Top            ; 00:00:01     ;
 +----------------+--------------+
 
 
@@ -330,27 +395,49 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit Analysis & Synthesis
     Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-    Info: Processing started: Sun May 01 23:09:23 2016
+    Info: Processing started: Tue May 03 00:29:55 2016
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cpu -c cpu
 Warning (20028): Parallel compilation is not licensed and has been disabled
-Warning (10261): Verilog HDL Event Control warning at cpu.v(35): Event Control contains a complex event expression
-Warning (10261): Verilog HDL Event Control warning at cpu.v(213): Event Control contains a complex event expression
-Warning (12125): Using design file cpu.v, which is not specified as a design file for the current project, but contains definitions for 5 design units and 5 entities in project
+Warning (10261): Verilog HDL Event Control warning at cpu.v(39): Event Control contains a complex event expression
+Warning (10261): Verilog HDL Event Control warning at cpu.v(233): Event Control contains a complex event expression
+Warning (12125): Using design file cpu.v, which is not specified as a design file for the current project, but contains definitions for 6 design units and 6 entities in project
     Info (12023): Found entity 1: cpu
     Info (12023): Found entity 2: setOpCodeDisplay
     Info (12023): Found entity 3: setRegDisplay
     Info (12023): Found entity 4: operation
     Info (12023): Found entity 5: setDisplay
+    Info (12023): Found entity 6: updateRegisters
 Info (12127): Elaborating entity "cpu" for the top level hierarchy
 Info (12128): Elaborating entity "setOpCodeDisplay" for hierarchy "setOpCodeDisplay:op1"
 Info (12128): Elaborating entity "setRegDisplay" for hierarchy "setRegDisplay:regDis1"
 Info (12128): Elaborating entity "setDisplay" for hierarchy "setDisplay:stage1"
 Info (12128): Elaborating entity "operation" for hierarchy "operation:operate1"
-Warning (10036): Verilog HDL or VHDL warning at cpu.v(207): object "opReg1" assigned a value but never read
-Warning (10036): Verilog HDL or VHDL warning at cpu.v(207): object "opReg2" assigned a value but never read
-Warning (10755): Verilog HDL warning at cpu.v(213): assignments to display create a combinational loop
-Warning (10034): Output port "reg7" at cpu.v(208) has no driver
+Warning (10036): Verilog HDL or VHDL warning at cpu.v(225): object "opReg1" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at cpu.v(225): object "opReg2" assigned a value but never read
+Warning (10755): Verilog HDL warning at cpu.v(233): assignments to display create a combinational loop
+Info (12128): Elaborating entity "updateRegisters" for hierarchy "updateRegisters:update1"
 Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][1]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][5]" is missing source, defaulting to GND
@@ -358,7 +445,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[4][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][5]" is missing source, defaulting to GND
@@ -366,7 +452,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[3][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][5]" is missing source, defaulting to GND
@@ -374,7 +459,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[2][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][5]" is missing source, defaulting to GND
@@ -382,7 +466,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[1][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][5]" is missing source, defaulting to GND
@@ -390,8 +473,28 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[0][0]" is missing source, defaulting to GND
 Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][1]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][5]" is missing source, defaulting to GND
@@ -399,7 +502,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[4][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][5]" is missing source, defaulting to GND
@@ -407,7 +509,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[3][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][5]" is missing source, defaulting to GND
@@ -415,7 +516,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[2][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][5]" is missing source, defaulting to GND
@@ -423,7 +523,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[1][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][5]" is missing source, defaulting to GND
@@ -431,8 +530,28 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[0][0]" is missing source, defaulting to GND
 Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][1]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][5]" is missing source, defaulting to GND
@@ -440,7 +559,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[4][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][5]" is missing source, defaulting to GND
@@ -448,7 +566,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[3][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][5]" is missing source, defaulting to GND
@@ -456,7 +573,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[2][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][5]" is missing source, defaulting to GND
@@ -464,7 +580,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[1][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][5]" is missing source, defaulting to GND
@@ -472,8 +587,28 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[0][0]" is missing source, defaulting to GND
 Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[7][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[6][1]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][7]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][6]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][5]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][4]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][3]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][2]" is missing source, defaulting to GND
+    Warning (12110): Net "bytes[5][1]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][5]" is missing source, defaulting to GND
@@ -481,7 +616,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[4][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[4][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][5]" is missing source, defaulting to GND
@@ -489,7 +623,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[3][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[3][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][5]" is missing source, defaulting to GND
@@ -497,7 +630,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[2][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[2][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][5]" is missing source, defaulting to GND
@@ -505,7 +637,6 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[1][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[1][0]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][7]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][6]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][5]" is missing source, defaulting to GND
@@ -513,20 +644,20 @@ Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][3]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][2]" is missing source, defaulting to GND
     Warning (12110): Net "bytes[0][1]" is missing source, defaulting to GND
-    Warning (12110): Net "bytes[0][0]" is missing source, defaulting to GND
+Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Info (286030): Timing-Driven Synthesis is running
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
 Warning (21074): Design contains 1 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "LED"
-Info (21057): Implemented 95 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 106 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 8 input pins
     Info (21059): Implemented 28 output pins
-    Info (21061): Implemented 59 logic cells
-Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 174 warnings
+    Info (21061): Implemented 70 logic cells
+Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 238 warnings
     Info: Peak virtual memory: 472 megabytes
-    Info: Processing ended: Sun May 01 23:09:30 2016
-    Info: Elapsed time: 00:00:07
-    Info: Total CPU time (on all processors): 00:00:07
+    Info: Processing ended: Tue May 03 00:29:59 2016
+    Info: Elapsed time: 00:00:04
+    Info: Total CPU time (on all processors): 00:00:03
 
 

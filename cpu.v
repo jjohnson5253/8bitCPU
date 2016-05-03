@@ -29,6 +29,10 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED);
 	
 	reg operate;  //set to 1 if operation should be performed
 	wire display; //set to true if user wants to display regID1 value
+	wire opDone; //variable set to true after operation stage is done
+	
+	wire [7:0] resultRegs [7:0]; //registers after operations have been performed... these values
+	//are the output from the operation module and are set based off the operation and previous state of registers
 	
 	
 	
@@ -44,8 +48,13 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED);
 		end
 		2 : begin
 		//registerID <= inputs;
+		Q <= 3;
+		end
+		3 : begin
+		//registerID <= inputs;
 		Q <= 0;
 		end
+		
 		
 		endcase
 	end
@@ -63,6 +72,7 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED);
 		case(Q)
 		0 : begin //state 0: set operation
 		opCode <= inputs; //set op code to the inputs
+		operate <= 0; //turn off operate
 		leds3 <= opCodeDisplay3; //set leds to display operation
 		leds2 <= opCodeDisplay2;
 		leds1 <= opCodeDisplay1;
@@ -85,7 +95,10 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED);
 		leds0 <= reg2Display0;
 		end
 		
-		3: operate <= 1;
+		3: begin
+		operate <= 1;
+		end
+		
 		endcase
 		end
 	end
@@ -97,8 +110,12 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED);
 		bytes[7],display3,display2,display1,display0);
 
 	
-	operation operate1(clock,regID1,regID2,opCode,bytes[7],operate,
-		bytes[0],bytes[1],bytes[2],bytes[3],bytes[4],display,displayButton,LED);
+	operation operate1(clock,regID1,regID2,opCode,operate,
+		bytes[0],bytes[1],bytes[2],bytes[3],bytes[4],bytes[5],bytes[6],bytes[7],resultRegs[0],resultRegs[1],resultRegs[2],
+		resultRegs[3],resultRegs[4],resultRegs[5],resultRegs[6],resultRegs[7],display,displayButton,opDone,LED); //theres gotta be an easier way to input arrays
+		
+	updateRegisters update1(resultRegs[0],resultRegs[1],resultRegs[2],resultRegs[3],resultRegs[4],resultRegs[5],
+		resultRegs[6],resultRegs[7],bytes[0],bytes[1],bytes[2],bytes[3],bytes[4],bytes[5],bytes[6],bytes[7],clock,opDone);
 	
 endmodule
 
@@ -198,15 +215,18 @@ end
 endmodule
 
 
-module operation(clock,regID1,regID2,opCode,reg7,operate,
-	reg0,reg1,reg2,reg3,reg4,display,displayButton,LED); //reg7 is the where result is stored
+module operation(clock,regID1,regID2,opCode,operate,
+	reg0,reg1,reg2,reg3,reg4,reg5,reg6,reg7,resultRegs0,resultRegs1,resultRegs2,resultRegs3,resultRegs4,
+	resultRegs5,resultRegs6,resultRegs7,display,displayButton,opDone,LED); //reg7 is the where result is stored
 input clock,operate,displayButton;
 input [3:0] regID1,regID2,opCode;
-input [7:0] reg0,reg1,reg2,reg3,reg4;
+input [7:0] reg0,reg1,reg2,reg3,reg4,reg5,reg6,reg7;
 
 reg [7:0] opReg1,opReg2; //registers to be operated on
-output reg [7:0] reg7;
+output reg [7:0] resultRegs0,resultRegs1,resultRegs2,resultRegs3,resultRegs4,
+	resultRegs5,resultRegs6,resultRegs7;
 output reg display,LED; //set to true if user wants to display register
+output reg opDone; //set to true when operation is done... set to false if operate is set to false
 initial display = 0;
 
 //toggle display option
@@ -236,9 +256,22 @@ always@(posedge clock)begin
 
 	//perform operations between operating registers according to opCode set by user in state 0
 	if(operate)begin
+	
+		//initialize resultRegisters to values of regs
+		resultRegs0 <= reg0;
+		resultRegs1 <= reg1;
+		resultRegs2 <= reg2;
+		resultRegs3 <= reg3;
+		resultRegs4 <= reg4;
+		resultRegs5 <= reg5;
+		resultRegs6 <= reg6;
+		resultRegs7 <= reg7;
+		
 		case(opCode)
 		4'b0000 : begin //add
 			//reg7 <= opReg1 + opReg2;
+			resultRegs0 <= 1;
+			resultRegs1 <= 1;
 		end
 		4'b0001 : ; //subtract
 		4'b0010 : ; 
@@ -257,7 +290,12 @@ always@(posedge clock)begin
 		4'b1111 : ;
 		
 		endcase
+		
+		opDone <= 1;
 
+	end
+	else begin
+		opDone <= 0;
 	end
 
 end
@@ -364,6 +402,34 @@ module setDisplay(clock,Q,regID1,regID2,reg0,reg1,reg2,reg3,reg4,
 
 	end
 
+endmodule
+
+module updateRegisters(resultRegs0,resultRegs1,resultRegs2,resultRegs3,resultRegs4,
+	resultRegs5,resultRegs6,resultRegs7,bytes0,bytes1,bytes2,bytes3,bytes4,bytes5,bytes6,bytes7,clock,opDone);
+	
+	input resultRegs0,resultRegs1,resultRegs2,resultRegs3,resultRegs4,
+	resultRegs5,resultRegs6,resultRegs7;
+	input clock,opDone;
+	output reg bytes0,bytes1,bytes2,bytes3,bytes4,bytes5,bytes6,bytes7;
+	
+	always@(posedge clock)begin //update registers when operation is done
+	
+		if(opDone)begin
+
+			bytes0 <= resultRegs0;
+			bytes1 <= resultRegs1;
+			bytes2 <= resultRegs2;
+			bytes3 <= resultRegs3;
+			bytes4 <= resultRegs4;
+			bytes5 <= resultRegs5;
+			bytes6 <= resultRegs6;
+			bytes7 <= resultRegs7;
+			
+		end
+	
+	end
+	
+	
 endmodule
 
 
