@@ -3,75 +3,111 @@ TimeQuest Timing Analyzer Summary
 ------------------------------------------------------------
 
 Type  : Slow 1200mV 85C Model Setup 'clock'
-Slack : -2.031
-TNS   : -62.629
+Slack : -1.765
+TNS   : -66.940
+
+Type  : Slow 1200mV 85C Model Setup 'instructionDone'
+Slack : -1.176
+TNS   : -18.593
 
 Type  : Slow 1200mV 85C Model Setup 'setButton'
-Slack : 0.183
+Slack : 0.317
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Hold 'clock'
-Slack : 0.345
+Slack : -0.010
+TNS   : -0.010
+
+Type  : Slow 1200mV 85C Model Hold 'instructionDone'
+Slack : 0.260
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Hold 'setButton'
-Slack : 0.381
+Slack : 0.384
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clock'
 Slack : -3.000
-TNS   : -47.000
+TNS   : -71.000
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'setButton'
 Slack : -3.000
-TNS   : -5.000
+TNS   : -4.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'instructionDone'
+Slack : -1.000
+TNS   : -22.000
 
 Type  : Slow 1200mV 0C Model Setup 'clock'
-Slack : -1.779
-TNS   : -53.635
+Slack : -1.577
+TNS   : -55.147
+
+Type  : Slow 1200mV 0C Model Setup 'instructionDone'
+Slack : -0.978
+TNS   : -14.851
 
 Type  : Slow 1200mV 0C Model Setup 'setButton'
-Slack : 0.266
+Slack : 0.398
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Hold 'clock'
-Slack : 0.300
+Slack : -0.008
+TNS   : -0.008
+
+Type  : Slow 1200mV 0C Model Hold 'instructionDone'
+Slack : 0.283
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Hold 'setButton'
-Slack : 0.333
+Slack : 0.341
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clock'
 Slack : -3.000
-TNS   : -47.000
+TNS   : -71.000
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'setButton'
 Slack : -3.000
-TNS   : -5.000
+TNS   : -4.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'instructionDone'
+Slack : -1.000
+TNS   : -22.000
 
 Type  : Fast 1200mV 0C Model Setup 'clock'
-Slack : -1.193
-TNS   : -32.381
+Slack : -1.076
+TNS   : -21.846
+
+Type  : Fast 1200mV 0C Model Setup 'instructionDone'
+Slack : -0.194
+TNS   : -1.714
 
 Type  : Fast 1200mV 0C Model Setup 'setButton'
-Slack : 0.545
+Slack : 0.624
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Hold 'clock'
-Slack : 0.180
+Slack : -0.125
+TNS   : -0.125
+
+Type  : Fast 1200mV 0C Model Hold 'instructionDone'
+Slack : 0.132
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Hold 'setButton'
-Slack : 0.199
+Slack : 0.206
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clock'
 Slack : -3.000
-TNS   : -49.578
+TNS   : -75.028
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'setButton'
 Slack : -3.000
-TNS   : -5.344
+TNS   : -4.169
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'instructionDone'
+Slack : -1.000
+TNS   : -22.000
 
 ------------------------------------------------------------

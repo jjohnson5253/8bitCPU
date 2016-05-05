@@ -1,9 +1,11 @@
 //Jake Johnson 2016
 
-module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED);
+module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED,LED9,LED0);
 	input clock,setButton; //clock and button to set values in each state
+	reg lastPush,currentPush;
+	initial lastPush = currentPush;
 	input displayButton; //press this button to toggle display variable
-	input [3:0] inputs; //inputs from switches
+	input [7:0] inputs; //inputs from switches
 	reg [2:0] Q; initial Q = 0; //state variable
 	input LED;
 
@@ -18,7 +20,13 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED);
 	assign bytes[6] = 1;
 	assign bytes[7] = 1;*/
 	
-	reg [3:0] opCode, regID1, regID2; //op code and register ids (set by inputs in their respective states)
+	wire [3:0] opCode; //op code and register ids (set by inputs in their respective states)
+	wire [2:0] regID1,regID2;
+	wire [7:0] immValue;
+	wire [17:0] instruction;
+	wire [17:0] instructionMem0,instructionMem1,instructionMem2,instructionMem3,instructionMem4,
+instructionMem5,instructionMem6,instructionMem7,instructionMem8,instructionMem9; //can store 10 instructions
+	
 	wire [1:7] opCodeDisplay3,opCodeDisplay2,opCodeDisplay1,opCodeDisplay0; //values that hold operation display
 	//these values are set at each clock pulse, according to the opCode
 	//leds are set to this when in state 0
@@ -34,33 +42,21 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED);
 	wire [7:0] resultRegs [7:0]; //registers after operations have been performed... these values
 	//are the output from the operation module and are set based off the operation and previous state of registers
 	
+	reg instructionDone=0; //tells instructionMemory module that an instruction is set and needs to be memorized
+	output LED9,LED0;
+
 	
 	
 	always@(posedge !setButton) begin
-		case(Q)
-		0 : begin
-		//opCode <= inputs; 
-		Q <= 1; 
-		end
-		1 : begin 
-		//registerID <= inputs;
-		Q <= 2; 
-		end
-		2 : begin
-		//registerID <= inputs;
-		Q <= 3;
-		end
-		3 : begin
-		//registerID <= inputs;
-		Q <= 0;
-		end
+	
+		currentPush = !currentPush;
 		
-		
-		endcase
 	end
 	
 	
 	always@(posedge clock)begin
+	
+		
 	
 		if(!displayButton && (Q==1 || Q==2 || Q==3))begin //if button pressed, and in regID states or operation state
 			leds3 <= display3;
@@ -68,19 +64,40 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED);
 			leds1 <= display1;
 			leds0 <= display0;
 		end
+		
+		else if(lastPush!=currentPush)begin
+			case(Q)
+				0 : begin //set opCode
+				Q <= 1; 
+				end
+				1 : begin  //set regid1
+				Q <= 2; 
+				end
+				2 : begin //set regid2
+				Q <= 3;
+				end
+				3 : begin //set imm value and set instruction
+				instructionDone <= 1;
+				Q <= 0;
+				end	
+			endcase
+			lastPush = currentPush;
+		end
+		
 		else begin
+		
 		case(Q)
 		0 : begin //state 0: set operation
-		opCode <= inputs; //set op code to the inputs
 		operate <= 0; //turn off operate
 		leds3 <= opCodeDisplay3; //set leds to display operation
 		leds2 <= opCodeDisplay2;
 		leds1 <= opCodeDisplay1;
 		leds0 <= opCodeDisplay0;
+		
+		instructionDone <= 0;
 		end
 		
 		1 : begin
-		regID1 <= inputs;
 		leds3 <= reg1Display3; //set leds to display regID
 		leds2 <= reg1Display2;
 		leds1 <= reg1Display1;
@@ -88,7 +105,6 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED);
 		end
 		
 		2 : begin
-		regID2 <= inputs;
 		leds3 <= reg2Display3; //set leds to display operation
 		leds2 <= reg2Display2;
 		leds1 <= reg2Display1;
@@ -96,7 +112,7 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED);
 		end
 		
 		3: begin
-		operate <= 1;
+		//operate <= 1;
 		end
 		
 		endcase
@@ -109,14 +125,20 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED);
 	setDisplay stage1(clock,Q,regID1,regID2,bytes[0],bytes[1],bytes[2],bytes[3],bytes[4],bytes[5],bytes[6],
 		bytes[7],display3,display2,display1,display0);
 
-	
+/*
 	operation operate1(clock,regID1,regID2,opCode,operate,
 		bytes[0],bytes[1],bytes[2],bytes[3],bytes[4],bytes[5],bytes[6],bytes[7],resultRegs[0],resultRegs[1],resultRegs[2],
 		resultRegs[3],resultRegs[4],resultRegs[5],resultRegs[6],resultRegs[7],display,displayButton,opDone,LED); //theres gotta be an easier way to input arrays
 		
+
 	updateRegisters update1(resultRegs[0],resultRegs[1],resultRegs[2],resultRegs[3],resultRegs[4],resultRegs[5],
-		resultRegs[6],resultRegs[7],bytes[0],bytes[1],bytes[2],bytes[3],bytes[4],bytes[5],bytes[6],bytes[7],clock,opDone);
-	
+		resultRegs[6],resultRegs[7],bytes[0],bytes[1],bytes[2],bytes[3],bytes[4],bytes[5],bytes[6],bytes[7],clock,opDone,Q);
+*/
+
+	instructionFetcher(LED0,clock,inputs,Q,instruction,opCode,regID1,regID2,immValue);
+	instructionMemory(LED9,clock,instruction,instructionDone,Q,instructionMem0,
+	instructionMem1,instructionMem2,instructionMem3,instructionMem4,
+	instructionMem5,instructionMem6,instructionMem7,instructionMem8,instructionMem9);
 endmodule
 
 
@@ -270,7 +292,7 @@ always@(posedge clock)begin
 		case(opCode)
 		4'b0000 : begin //add
 			//reg7 <= opReg1 + opReg2;
-			resultRegs0 <= 1;
+			resultRegs0 <= 2;
 			resultRegs1 <= 1;
 		end
 		4'b0001 : ; //subtract
@@ -405,14 +427,17 @@ module setDisplay(clock,Q,regID1,regID2,reg0,reg1,reg2,reg3,reg4,
 endmodule
 
 module updateRegisters(resultRegs0,resultRegs1,resultRegs2,resultRegs3,resultRegs4,
-	resultRegs5,resultRegs6,resultRegs7,bytes0,bytes1,bytes2,bytes3,bytes4,bytes5,bytes6,bytes7,clock,opDone);
+	resultRegs5,resultRegs6,resultRegs7,bytes0,bytes1,bytes2,bytes3,bytes4,bytes5,bytes6,bytes7,clock,opDone,Q);
 	
 	input resultRegs0,resultRegs1,resultRegs2,resultRegs3,resultRegs4,
-	resultRegs5,resultRegs6,resultRegs7;
+	resultRegs5,resultRegs6,resultRegs7,Q;
 	input clock,opDone;
 	output reg bytes0,bytes1,bytes2,bytes3,bytes4,bytes5,bytes6,bytes7;
 	
 	always@(posedge clock)begin //update registers when operation is done
+	
+		if(Q==1)
+			bytes0 <=0;
 	
 		if(opDone)begin
 

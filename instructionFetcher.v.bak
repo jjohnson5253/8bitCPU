@@ -1,0 +1,31 @@
+module instructionFetcher(clock,switches,state);
+input [7:0] switches;
+input clock,state;
+output reg [16:0] instruction;
+
+	always@(posedge clock)begin
+
+		
+		case(state)
+
+			0 : begin //set opcode for instruction
+				
+			end
+			1 : begin //set regid1 for instruction
+				
+			end
+			2 : begin//set regid2 for instruction
+				
+			end
+			3 : begin//set immediate value for instruction
+
+			end
+
+		endcase
+
+
+
+	end
+
+
+endmodule
