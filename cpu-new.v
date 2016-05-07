@@ -74,3 +74,22 @@ output reg [16:0] instruction;
 
 
 endmodule
+
+module instructionMemory(clock,instruction,instructionMem,instructionDone,state);
+input clock;
+input [2:0] state;
+input[16:0]instruction;
+input instructionDone;
+integer i = 0;
+output reg[9:0]instructionMem;
+
+always@(posedge instructionDone)begin
+		
+		instructionMem[i] <= instruction;
+		i = i + 1;
+
+end
+
+
+
+endmodule

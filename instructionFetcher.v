@@ -10,6 +10,10 @@ output reg [2:0] regID1,regID2;
 output reg [7:0] immValue;
 output reg LED0=0;
 
+reg [7:0] myArray [0:3];
+
+
+
 
 
 	always@(posedge clock)begin
@@ -18,6 +22,7 @@ output reg LED0=0;
 
 			0 : begin //set opcode for instruction
 				opCode <= switches;
+				myArray [0] = 1;
 				
 			end
 			1 : begin //set regid1 for instruction
@@ -70,24 +75,31 @@ endmodule
 module instructionMemory(LED9,clock,instruction,instructionDone,state,instructionMem0,
 instructionMem1,instructionMem2,instructionMem3,instructionMem4,
 instructionMem5,instructionMem6,instructionMem7,instructionMem8,instructionMem9);
+/*
+module instructionMemory(LED9,clock,instruction,instructionDone,state,instructionMem[0],
+	instructionMem[1],instructionMem[2],instructionMem[3],instructionMem[4],
+	instructionMem[5],instructionMem[6],instructionMem[7],instructionMem[8],instructionMem[9]);*/
 input clock;
 input [2:0] state;
 input[17:0]instruction;
 input instructionDone;
 reg[3:0] i = 0;
-output reg [17:0]instructionMem0,instructionMem1,instructionMem2,instructionMem3,instructionMem4,
+//output reg [17:0] instructionMem [0:9];
+//output reg instructionMem[0:9];
+output reg [17:0] instructionMem0,
+instructionMem1,instructionMem2,instructionMem3,instructionMem4,
 instructionMem5,instructionMem6,instructionMem7,instructionMem8,instructionMem9;
 output reg LED9 = 0;
-
+/*
 initial instructionMem0=0;initial instructionMem1=0;initial instructionMem2=0;initial instructionMem3=0;
 initial instructionMem4=0;initial instructionMem5=0;initial instructionMem6=0;initial instructionMem7=0;
 initial instructionMem8=0;initial instructionMem9=0; //God I need to learn to use arrays in Verilog
-
+*/
 
 always@(posedge clock)begin
 		
-		if(instructionMem2== 18'b000100000000000000)
-			LED9 <=1;
+		//if(instructionMem2== 18'b000100000000000000)
+			//LED9 <=1;
 			
 end
 

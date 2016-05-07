@@ -1,5 +1,5 @@
 Flow report for cpu
-Wed May 04 22:52:44 2016
+Fri May 06 18:45:53 2016
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -40,17 +40,17 @@ applicable agreement for further details.
 +--------------------------------------------------------------------------------------+
 ; Flow Summary                                                                         ;
 +------------------------------------+-------------------------------------------------+
-; Flow Status                        ; Successful - Wed May 04 22:52:33 2016           ;
+; Flow Status                        ; Successful - Fri May 06 18:45:42 2016           ;
 ; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
 ; Revision Name                      ; cpu                                             ;
 ; Top-level Entity Name              ; cpu                                             ;
 ; Family                             ; Cyclone III                                     ;
 ; Device                             ; EP3C16F484C6                                    ;
 ; Timing Models                      ; Final                                           ;
-; Total logic elements               ; 113 / 15,408 ( < 1 % )                          ;
-;     Total combinational functions  ; 64 / 15,408 ( < 1 % )                           ;
-;     Dedicated logic registers      ; 91 / 15,408 ( < 1 % )                           ;
-; Total registers                    ; 91                                              ;
+; Total logic elements               ; 84 / 15,408 ( < 1 % )                           ;
+;     Total combinational functions  ; 52 / 15,408 ( < 1 % )                           ;
+;     Dedicated logic registers      ; 67 / 15,408 ( < 1 % )                           ;
+; Total registers                    ; 67                                              ;
 ; Total pins                         ; 42 / 347 ( 12 % )                               ;
 ; Total virtual pins                 ; 0                                               ;
 ; Total memory bits                  ; 0 / 516,096 ( 0 % )                             ;
@@ -64,26 +64,30 @@ applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 05/04/2016 22:51:48 ;
+; Start date & time ; 05/06/2016 18:44:58 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; cpu                 ;
 +-------------------+---------------------+
 
 
-+-----------------------------------------------------------------------------------------------------------------+
-; Flow Non-Default Global Settings                                                                                ;
-+-------------------------------------+--------------------------------+---------------+-------------+------------+
-; Assignment Name                     ; Value                          ; Default Value ; Entity Name ; Section Id ;
-+-------------------------------------+--------------------------------+---------------+-------------+------------+
-; COMPILER_SIGNATURE_ID               ; 53132158953055.146242390710804 ; --            ; --          ; --         ;
-; MAX_CORE_JUNCTION_TEMP              ; 85                             ; --            ; --          ; --         ;
-; MIN_CORE_JUNCTION_TEMP              ; 0                              ; --            ; --          ; --         ;
-; NOMINAL_CORE_SUPPLY_VOLTAGE         ; 1.2V                           ; --            ; --          ; --         ;
-; PARTITION_COLOR                     ; 16764057                       ; --            ; --          ; Top        ;
-; PARTITION_FITTER_PRESERVATION_LEVEL ; PLACEMENT_AND_ROUTING          ; --            ; --          ; Top        ;
-; PARTITION_NETLIST_TYPE              ; SOURCE                         ; --            ; --          ; Top        ;
-; PROJECT_OUTPUT_DIRECTORY            ; output_files                   ; --            ; --          ; --         ;
-+-------------------------------------+--------------------------------+---------------+-------------+------------+
++------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                       ;
++-------------------------------------+---------------------------------------+---------------+-------------+------------+
+; Assignment Name                     ; Value                                 ; Default Value ; Entity Name ; Section Id ;
++-------------------------------------+---------------------------------------+---------------+-------------+------------+
+; COMPILER_SIGNATURE_ID               ; 53132158953055.146258189813696        ; --            ; --          ; --         ;
+; MAX_CORE_JUNCTION_TEMP              ; 85                                    ; --            ; --          ; --         ;
+; MIN_CORE_JUNCTION_TEMP              ; 0                                     ; --            ; --          ; --         ;
+; NOMINAL_CORE_SUPPLY_VOLTAGE         ; 1.2V                                  ; --            ; --          ; --         ;
+; PARTITION_COLOR                     ; 16764057                              ; --            ; --          ; Top        ;
+; PARTITION_FITTER_PRESERVATION_LEVEL ; PLACEMENT_AND_ROUTING                 ; --            ; --          ; Top        ;
+; PARTITION_NETLIST_TYPE              ; SOURCE                                ; --            ; --          ; Top        ;
+; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                   ; --            ; --          ; --         ;
+; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW ; --            ; --          ; --         ;
+; PROJECT_OUTPUT_DIRECTORY            ; output_files                          ; --            ; --          ; --         ;
+; VERILOG_INPUT_VERSION               ; SystemVerilog_2005                    ; Verilog_2001  ; --          ; --         ;
+; VERILOG_SHOW_LMF_MAPPING_MESSAGES   ; Off                                   ; --            ; --          ; --         ;
++-------------------------------------+---------------------------------------+---------------+-------------+------------+
 
 
 +-------------------------------------------------------------------------------------------------------------------------------+
@@ -91,11 +95,11 @@ applicable agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:00:06     ; 1.0                     ; 461 MB              ; 00:00:06                           ;
-; Fitter                    ; 00:00:30     ; 1.0                     ; 788 MB              ; 00:00:31                           ;
+; Analysis & Synthesis      ; 00:00:07     ; 1.0                     ; 460 MB              ; 00:00:07                           ;
+; Fitter                    ; 00:00:29     ; 1.0                     ; 788 MB              ; 00:00:29                           ;
 ; Assembler                 ; 00:00:05     ; 1.0                     ; 433 MB              ; 00:00:05                           ;
-; TimeQuest Timing Analyzer ; 00:00:09     ; 1.0                     ; 470 MB              ; 00:00:08                           ;
-; Total                     ; 00:00:50     ; --                      ; --                  ; 00:00:50                           ;
+; TimeQuest Timing Analyzer ; 00:00:09     ; 1.0                     ; 474 MB              ; 00:00:08                           ;
+; Total                     ; 00:00:50     ; --                      ; --                  ; 00:00:49                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

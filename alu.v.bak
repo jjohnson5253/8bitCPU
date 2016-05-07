@@ -1,0 +1,29 @@
+
+
+module ALU(instructionMem0,
+instructionMem1,instructionMem2,instructionMem3,instructionMem4,
+instructionMem5,instructionMem6,instructionMem7,instructionMem8,instructionMem9);
+
+input instructionMem0,
+instructionMem1,instructionMem2,instructionMem3,instructionMem4,
+instructionMem5,instructionMem6,instructionMem7,instructionMem8,instructionMem9;
+
+wire [3:0] opCode [0:9];
+wire [2:0] regID1 [0:9];
+wire [2:0] regID2 [0:9]
+wire [7:0] immValue [0:9];
+
+instructionDecoder mem0(instructionMem0,opCode[0],regID1[0],regID2[0],immValue[0]);
+
+
+
+endmodule
+
+module instructionDecoder(instruction,opCode,regID1,regID2,immValue)
+
+input [17:0] instruction;
+output reg [3:0] opCode;
+output reg [2:0] regID1,regID2;
+output reg [7:0] immValue;
+
+endmodule

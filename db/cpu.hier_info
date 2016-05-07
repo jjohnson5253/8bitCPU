@@ -602,17 +602,17 @@ clock => immValue[4]~reg0.CLK
 clock => immValue[5]~reg0.CLK
 clock => immValue[6]~reg0.CLK
 clock => immValue[7]~reg0.CLK
-switches[0] => opCode[0]~reg0.DATAIN
-switches[0] => regID1[0]~reg0.DATAIN
 switches[0] => regID2[0]~reg0.DATAIN
+switches[0] => regID1[0]~reg0.DATAIN
+switches[0] => opCode[0]~reg0.DATAIN
 switches[0] => immValue[0]~reg0.DATAIN
-switches[1] => opCode[1]~reg0.DATAIN
-switches[1] => regID1[1]~reg0.DATAIN
 switches[1] => regID2[1]~reg0.DATAIN
+switches[1] => regID1[1]~reg0.DATAIN
+switches[1] => opCode[1]~reg0.DATAIN
 switches[1] => immValue[1]~reg0.DATAIN
-switches[2] => opCode[2]~reg0.DATAIN
-switches[2] => regID1[2]~reg0.DATAIN
 switches[2] => regID2[2]~reg0.DATAIN
+switches[2] => regID1[2]~reg0.DATAIN
+switches[2] => opCode[2]~reg0.DATAIN
 switches[2] => immValue[2]~reg0.DATAIN
 switches[3] => opCode[3]~reg0.DATAIN
 switches[3] => immValue[3]~reg0.DATAIN
@@ -662,8 +662,8 @@ immValue[7] <= immValue[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
 |cpu|instructionMemory:comb_202
-LED9 <= LED9~reg0.DB_MAX_OUTPUT_PORT_TYPE
-clock => LED9~reg0.CLK
+LED9 <= <GND>
+clock => ~NO_FANOUT~
 instruction[0] => instructionMem2[0]~reg0.DATAIN
 instruction[0] => instructionMem1[0]~reg0.DATAIN
 instruction[0] => instructionMem0[0]~reg0.DATAIN

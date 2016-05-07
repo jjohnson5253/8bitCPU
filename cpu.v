@@ -24,6 +24,7 @@ module cpu(clock,inputs,leds3,leds2,leds1,leds0,setButton,displayButton,LED,LED9
 	wire [2:0] regID1,regID2;
 	wire [7:0] immValue;
 	wire [17:0] instruction;
+	//wire [17:0] instructionMem [0:9];
 	wire [17:0] instructionMem0,instructionMem1,instructionMem2,instructionMem3,instructionMem4,
 instructionMem5,instructionMem6,instructionMem7,instructionMem8,instructionMem9; //can store 10 instructions
 	
@@ -136,9 +137,14 @@ instructionMem5,instructionMem6,instructionMem7,instructionMem8,instructionMem9;
 */
 
 	instructionFetcher(LED0,clock,inputs,Q,instruction,opCode,regID1,regID2,immValue);
+	/*
 	instructionMemory(LED9,clock,instruction,instructionDone,Q,instructionMem0,
 	instructionMem1,instructionMem2,instructionMem3,instructionMem4,
-	instructionMem5,instructionMem6,instructionMem7,instructionMem8,instructionMem9);
+	instructionMem5,instructionMem6,instructionMem7,instructionMem8,instructionMem9); */
+	
+	instructionMemory(LED9,clock,instruction,instructionDone,Q,instructionMem0,
+instructionMem1,instructionMem2,instructionMem3,instructionMem4,
+instructionMem5,instructionMem6,instructionMem7,instructionMem8,instructionMem9);
 endmodule
 
 
