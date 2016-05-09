@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP3C16F484) Path("C:/altera/13.0sp1/cpu-project/output_files/") File("cpu.sof") MfrSpec(OpMask(1));
+		Device PartName(EP3C16F484) Path("C:/Users/Jake/Desktop/cpu-project/output_files/") File("cpu.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

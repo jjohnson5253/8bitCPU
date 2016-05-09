@@ -1,5 +1,15 @@
 <?xml version="1.0" ?>
 <LOG_ROOT>
 	<PROJECT NAME="cpu">
+		<CBX_INST_ENTRY INSTANCE_NAME="|cpu|setDisplay:stage1|lpm_divide:Div1" CBX_FILE_NAME="lpm_divide_nhm.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|cpu|setDisplay:stage1|lpm_divide:Mod0" CBX_FILE_NAME="lpm_divide_d8m.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|cpu|setImmValueDisplay:immDis1|lpm_divide:Mod1" CBX_FILE_NAME="lpm_divide_98m.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|cpu|setDisplay:stage1|lpm_divide:Div0" CBX_FILE_NAME="lpm_divide_nhm.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|cpu|setDisplay:stage1|lpm_divide:Mod1" CBX_FILE_NAME="lpm_divide_98m.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|cpu|setImmValueDisplay:immDis1|lpm_divide:Div1" CBX_FILE_NAME="lpm_divide_nhm.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|cpu|setImmValueDisplay:immDis1|lpm_divide:Mod0" CBX_FILE_NAME="lpm_divide_d8m.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|cpu|setImmValueDisplay:immDis1|lpm_divide:Mod2" CBX_FILE_NAME="lpm_divide_98m.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|cpu|setDisplay:stage1|lpm_divide:Mod2" CBX_FILE_NAME="lpm_divide_98m.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|cpu|setImmValueDisplay:immDis1|lpm_divide:Div0" CBX_FILE_NAME="lpm_divide_nhm.tdf"/>
 	</PROJECT>
 </LOG_ROOT>

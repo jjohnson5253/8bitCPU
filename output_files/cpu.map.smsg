@@ -1,3 +1,5 @@
-Warning (10268): Verilog HDL information at instructionFetcher.v(19): always construct contains both blocking and non-blocking assignments
-Warning (10268): Verilog HDL information at instructionFetcher.v(106): always construct contains both blocking and non-blocking assignments
-Warning (10268): Verilog HDL information at cpu.v(58): always construct contains both blocking and non-blocking assignments
+Warning (10268): Verilog HDL information at display.v(204): always construct contains both blocking and non-blocking assignments
+Warning (10268): Verilog HDL information at display.v(286): always construct contains both blocking and non-blocking assignments
+Warning (10268): Verilog HDL information at instructionFetcher.v(74): always construct contains both blocking and non-blocking assignments
+Warning (10268): Verilog HDL information at alu.v(35): always construct contains both blocking and non-blocking assignments
+Warning (10268): Verilog HDL information at cpu.v(56): always construct contains both blocking and non-blocking assignments
