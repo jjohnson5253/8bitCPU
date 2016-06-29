@@ -44,7 +44,7 @@ if(execute)begin
 
 //for loop to perform all the instructions from memory
 //can't get this to end at j=instructionsSet for some reason D:<
-//for(j=0; j<=1; j=j+1)begin //should increment twice
+//for(j=0; j<=0; j=j+1)begin //should increment twice
 
 //Think I'm gonna have to ditch the for loop and do FSM with 10 states or something
 
@@ -102,7 +102,7 @@ if(execute)begin
 	 	reg7 = opReg1 - opReg2;
 	 end
 	 
-	///////////////////////////INVERT///////////////////////////
+	///////////////////////////INVERT/////////////////////////// *broken
 	4'b0010 : begin
 
 		opReg1[7] = !opReg1[7]; 
@@ -178,7 +178,7 @@ if(execute)begin
 	end
 	///////////////////////////Compare//////////////////////////
 	4'b1001 : ; 
-	///////////////////////LOAD//////////////////////////////
+	///////////////////////LOAD////////////////////////////// *works
 	4'b1010 : begin
 		
 		case(opReg1) //load first reg selected to immValue
